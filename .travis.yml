@@ -1,0 +1,14 @@
+sudo: required
+language: generic
+services: 
+ - docker
+
+before_install:
+ - echo "start creating an image with dockerfile.dev"
+ - docker build -t unoons/docker-react-app -f dockerfile.dev .
+
+script:
+ - docker run -e CI=true unoons/docker-react-app npm run test -- --coverage
+
+ after_success:
+  - echo "TEST success"
